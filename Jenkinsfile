@@ -33,19 +33,18 @@ pipeline {
         }
         stage('Deploy to Minikube') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: 'default', serverUrl: '') {
-                    sh '''
-                    # Ensure context is focused on the local Minikube cluster instance
-                    kubectl config use-context minikube
-                    
-                    # Apply manifest structural files safely
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
-                    
-                    # Patch the deployment target to pull the new version from internal cache
-                    kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
-                    '''
-                }
+                // Bypassed withKubeConfig - executing native host binary tasks directly
+                sh '''
+                # Direct kubectl straight into your local Minikube cluster instance
+                kubectl config use-context minikube
+                
+                # Apply manifest structural layouts
+                kubectl apply -f k8s/deployment.yaml
+                kubectl apply -f k8s/service.yaml
+                
+                # Patch the deployment target to pull your updated version tag
+                kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
+                '''                }
             }
         }
     }
