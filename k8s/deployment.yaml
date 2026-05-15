@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: student_pass
+  labels:
+    app: student_pass
 spec:
   replicas: 1
   selector:
@@ -11,11 +13,16 @@ spec:
     metadata:
       labels:
         app: student_pass
+      # Targets Prometheus automatically to track this pod's live network traffic
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
     spec:
       containers:
       - name: student_pass
-        # Make sure this matches your 'your_dockerhub_username/my-local-app' paths
-        image: davidadeleke23/student_pass:latest 
-        imagePullPolicy: Always # <--- Forces Minikube to check Docker Hub for the newest tags
+        # Points securely to the local internal compilation engine
+        image: local/student_pass:latest 
+        # Prevents Minikube from checking external networks for this asset
+        imagePullPolicy: IfNotPresent 
         ports:
         - containerPort: 80
