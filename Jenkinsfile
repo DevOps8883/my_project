@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Validating core application assets..."
-                test -f index.html
+                test -f html/index.html
                 '''
             }
         }
