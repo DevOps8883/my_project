@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student_pass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: student_pass
+  template:
+    metadata:
+      labels:
+        app: student_pass
+    spec:
+      containers:
+      - name: student_pass
+        # Make sure this matches your 'your_dockerhub_username/my-local-app' paths
+        image: davidadeleke23/student_pass:latest 
+        imagePullPolicy: Always # <--- Forces Minikube to check Docker Hub for the newest tags
+        ports:
+        - containerPort: 80
