@@ -1,0 +1,222 @@
+body {background-color:#b3ecff;
+}
+
+h2{
+	font-family: bahnschrift;
+}
+.banner{
+	color: purple;
+}
+span{
+	font-family: caterpillar;
+	font-size: xx-large;
+}
+i{
+	font-size: 15px;
+	position: absolute;
+	margin-top: -40px;
+	margin-left: -60px;
+	color: red;
+}
+/* Navigation */
+nav{
+	position: absolute;
+	top: 10%;
+	left: 0%;
+	width: 100%;
+        background-color: #000099;
+	color: white;
+}
+.nav{
+	font-family: comic sans ms;
+	float: left;
+	padding: 20px;
+}
+.nav:hover{
+	background-color: blue;
+	color: white;
+	cursor: pointer;
+}
+.active{
+	background-color: grey;
+	color: white;
+}
+.active:hover{
+	background-color: grey;
+	color: white;
+}
+a:visited{
+	color: black;
+}
+a{
+	color: black;
+}
+/* Dropdown */
+#dropdown{
+	position: absolute;
+	top: 19.7%;
+	left: 24.5%;
+	display: none;
+	border: 2px solid black;
+}
+#dropdown div{
+	float: left;
+	width: 200px;
+	padding: 20px;
+	background-color: white;
+	color: black;
+}
+#dropdown div:hover{
+	background-color: purple;
+	color: white;
+	cursor: pointer;
+}
+#dropdown a{
+	color: black;
+}
+#dropdown a:visited{
+	color: black;
+}
+/* Image Slideshow */
+#img-container{
+	margin-top: 230px;
+	width: 304px;
+	height: 254px;
+	overflow: hidden;
+}
+#img-container img{
+	width: 300px;
+	height: 250px;
+}
+#inner-img-container{
+	animation-name: scrol;
+	animation-duration: 15s;
+	animation-iteration-count: infinite;
+}
+/* Margin */
+#margin{
+	width: 200px;
+	height: 60px;
+}
+/* Form */
+form{
+	width: 50%;
+	position: absolute;
+	top: 21.7%;
+	left: 25%;
+	background-color: white;
+	padding: 20px;
+}
+label{
+	font-size: 25px;
+	font-family: bahnschrift;
+}
+input[type=text]{
+	height: 40px;
+	width: 300px; 
+	background-color: lightblue;
+	font-size: 30px;
+	font-family: bell mt;
+}
+input[type=text]:disabled{
+	height: 40px;
+	width: 300px; 
+	background-color: grey;
+	font-size: 30px;
+	font-family: bell mt;
+}
+input[type=tel]{
+	height: 40px;
+	width: 300px; 
+	background-color: lightblue;
+	font-size: 30px;
+	font-family: bell mt;
+}
+input[type=datetime-local]{
+	height: 40px;
+	width: 300px; 
+	background-color: lightblue;
+	font-size: 25px;
+	font-family: bell mt;
+}
+select{
+	height: 40px;
+	width: 306px; 
+	background-color: lightblue;
+	font-size: 30px;
+	font-family: bell mt;
+}
+#next{
+	width: 640px;
+	height: 40px;
+	font-size: 35px;
+	font-family: bell mt;
+	background-color: blue;
+	color: white;
+}
+#next:hover{
+	cursor: pointer;
+	background-color: white;
+	color: blue;
+}
+#next:hover:after{
+	content: ' >>'
+}
+td{
+	padding: 10px;
+}
+/* Loader */
+#loader{
+	width: 100px;
+	height: 100px;
+	border: 10px solid grey;
+	border-top-color: rgb(0,100,255);
+	border-radius: 100px;
+	animation-name: load;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+/* Animation for Image Slideshow */
+@keyframes scrol{
+	0%{
+		margin-top: 0%;
+	}
+	19%{
+		margin-top: 0%;
+	}
+	20%{
+		margin-top: -254px;
+	}
+	39%{
+		margin-top: -254px;
+	}
+	40%{
+		margin-top: -508px;
+	}
+	59%{
+		margin-top: -508px;
+	}
+	60%{
+		margin-top: -762px;
+	}
+	79%{
+		margin-top: -762px;
+	}
+	80%{
+		margin-top: -1016px;
+	}
+	99%{
+		margin-top: -1016px;
+	}
+	100%{
+		margin-top: -1270px;
+	}
+}
+/* Loader */
+@keyframes load{
+	0%{
+		transform: rotateZ(0deg);
+		transform: rotateZ(-359deg);
+	}
+}
