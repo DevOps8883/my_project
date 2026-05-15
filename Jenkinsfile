@@ -50,6 +50,7 @@ pipeline {
                     
                     # Apply manifest changes
                     kubectl apply -f k8s/deployment.yaml
+                    kubectl apply -f k8s/service.yaml
                     
                     # Update deployment to use the newly pushed Docker Hub image tag
                     kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
