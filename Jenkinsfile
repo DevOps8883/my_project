@@ -1,13 +1,10 @@
 pipeline {
     agent any
     environment {
-        // Change this to your exact Docker Hub username
-        DOCKERHUB_USER = 'davidadeleke23'
         APP_NAME = 'student_pass'
-        
-        // Formats the tag correctly for Docker Hub registry matching
-        IMAGE_TAG = "${DOCKERHUB_USER}/${APP_NAME}:${BUILD_NUMBER}"
-        LATEST_TAG = "${DOCKERHUB_USER}/${APP_NAME}:latest"
+        // Internal image tag configuration used locally by Minikube
+        IMAGE_TAG = "local/${APP_NAME}:${BUILD_NUMBER}"
+        LATEST_TAG = "local/${APP_NAME}:latest"
     }
     stages {
         stage('Lint & Verify Frontend') {
@@ -18,41 +15,34 @@ pipeline {
                 '''
             }
         }
-        stage('Build & Push to Docker Hub') {
+        stage('Build Image Locally') {
             steps {
-                // Securely injects your saved credentials into environmental variables
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                    # Log into remote Docker Hub using injected variables
-                    echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-                    
-                    # Build locally on the host agent machine
-                    docker build -t ${IMAGE_TAG} -t ${LATEST_TAG} .
-                    
-                    # Push versioned and latest images out to Docker Hub registry
-                    docker push ${IMAGE_TAG}
-                    docker push ${LATEST_TAG}
-                    '''
-                }
+                sh '''
+                # Point host Docker command utilities straight into Minikube space
+                eval $(minikube -p minikube docker-env)
+                
+                # Build the image directly inside Minikube's container environment
+                docker build -t ${IMAGE_TAG} -t ${LATEST_TAG} .
+                '''
             }
         }
         stage('Approval Gate') {
             steps {
-                input message: "Deploy image ${IMAGE_TAG} to local Minikube cluster?", ok: "Approve Local Deploy"
+                input message: "Deploy local image version ${BUILD_NUMBER} to Minikube cluster?", ok: "Approve Local Deploy"
             }
         }
         stage('Deploy to Minikube') {
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: 'default', serverUrl: '') {
                     sh '''
-                    # Direct terminal tools explicitly into Minikube system context
+                    # Ensure context is focused on the local Minikube cluster instance
                     kubectl config use-context minikube
                     
-                    # Apply manifest changes
+                    # Apply manifest structural files safely
                     kubectl apply -f k8s/deployment.yaml
                     kubectl apply -f k8s/service.yaml
                     
-                    # Update deployment to use the newly pushed Docker Hub image tag
+                    # Patch the deployment target to pull the new version from internal cache
                     kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
                     '''
                 }
