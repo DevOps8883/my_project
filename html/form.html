@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DLHS Abuja (Exeat)</title>
+	<link rel="icon" href="images/logo.png.jpg">
+</head>
+<body>
+	<!-- Navigation -->
+	<nav>
+		<div id="home" class="nav">Home</div>
+		<div id="about" class="nav">About Us</div>
+		<div id="campus" class="nav">Our Campuses</div>
+		<div id="form" class="active nav">Forms</div>
+	</nav>
+	<center>
+		<img src="images/logo.png.jpg" width="50" height="50" style="float: left;margin-top: -7px;border-radius: 5px;">
+		<h2 style="margin-top: 10px;" class="banner">DEEPER LIFE HIGH SCHOOL, ABUJA</h2>
+		<br>
+		<i>Leadership with distinction...</i>
+	</center>
+	<!-- Margin -->
+	<div id="margin"></div>
+	<!-- Exeat Form -->
+	<form>
+		<center>
+			<img src="images/logo.png.jpg" width="200" height="200">
+			<h2><span>S</span>tudent <span>F</span>orm</h2>
+		<table>
+			<tr>
+				<td><label>Surname:</label></td>
+				<td><input type="text" name="sfname" placeholder="" oninput='values.fnames = this.value;'></td>
+			</tr>
+			<tr>
+				<td><label>Other Names:</label></td>
+				<td><input type="text" name="slname" placeholder="" oninput='values.lnames = this.value;'></td>
+			</tr>
+			<tr>
+				<td><label>Gender:</label></td>
+				<td>
+					<select onchange="values.gender = this.value;">
+						<option>Male</option>
+						<option>Female</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Reason:</label></td>
+				<td>
+					<select onchange="values.occasion = this.value;">
+						<option>Birthday Party</option>
+						<option>Burial (Nuclear Family)</option>
+						<option>Burial (Extended Family)</option>
+						<option>VISA Appointment</option>
+						<option>Passport Appointment</option>
+						<option>Medical Checkup</option>
+						<option>Vacation</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Pick up date:</label></td>
+				<td><input type="datetime-local" name="spickup" placeholder="" min="2023-03-08T12:12" id="pick" oninput="maxDrop(this);values.pickdate = refine(this.value);"></td>
+			</tr>
+			<tr>
+				<td><label>Drop date:</label></td>
+				<td><input type="datetime-local" name="sdrop" placeholder="" id="drop" oninput="values.dropdate = refine(this.value);"></td>
+			</tr>
+		</table>
+		</center>
+		<button id="next" onclick="nex('parent');event.preventDefault();">Next</button>
+	</form>
+	<script type="text/javascript" src="js/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</body>
+</html>
