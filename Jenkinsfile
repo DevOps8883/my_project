@@ -44,8 +44,9 @@ pipeline {
                 
                 # Patch the deployment target to pull your updated version tag
                 kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
-                '''                }
+                '''               
+                }
             }
         }
     }
-}
+
