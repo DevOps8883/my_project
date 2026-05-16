@@ -10,5 +10,5 @@ spec:
     - protocol: TCP
       port: 80                # The port the service exposes inside the cluster
       targetPort: 80           # The port your Nginx container is listening on
-      nodePort: 30080          # Maps the website to port 30080 on your Minikube IP
+      
 
