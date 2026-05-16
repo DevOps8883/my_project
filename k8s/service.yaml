@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: student_pass-service
+  name: student-pass-service
 spec:
   type: NodePort               # Exposes the service outside the Minikube cluster
   selector:
-    app: student_pass            # Must exactly match the label in your deployment.yaml
+    app: student-pass            # Must exactly match the label in your deployment.yaml
   ports:
     - protocol: TCP
       port: 80                # The port the service exposes inside the cluster
