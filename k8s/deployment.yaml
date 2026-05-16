@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: student_pass
+  name: student-pass
   labels:
-    app: student_pass
+    app: student-pass
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: student_pass
+      app: student-pass
   template:
     metadata:
       labels:
-        app: student_pass
+        app: student-pass
       # Targets Prometheus automatically to track this pod's live network traffic
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "80"
     spec:
       containers:
-      - name: student_pass
+      - name: student-pass
         # Points securely to the local internal compilation engine
-        image: local/student_pass:latest 
+        image: local/student-pass:latest 
         # Prevents Minikube from checking external networks for this asset
         imagePullPolicy: IfNotPresent 
         ports:
