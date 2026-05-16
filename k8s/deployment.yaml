@@ -18,6 +18,9 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "80"
     spec:
+      securityContext:
+        # Grants Grafana (User 472) system permissions to write files to the volume
+        fsGroup: 472
       containers:
       - name: student-pass
         # Points securely to the local internal compilation engine
@@ -26,3 +29,12 @@ spec:
         imagePullPolicy: IfNotPresent 
         ports:
         - containerPort: 80
+        volumeMounts:
+        # Mounts your persistent storage directly over Grafana's internal data folder
+        - name: grafana-storage
+          mountPath: /var/lib/grafana
+      volumes:
+      # Links the container mount slot to your persistent storage claim
+      - name: grafana-storage
+        persistentVolumeClaim:
+          claimName: grafana-pvc
