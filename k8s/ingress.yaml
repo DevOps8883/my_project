@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: student-pass-ingress
+  annotations:
+    # Tells Kubernetes to use Minikube's built-in Nginx engine
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: studentpass.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: student-pass-service
+            port:
+              number: 80
