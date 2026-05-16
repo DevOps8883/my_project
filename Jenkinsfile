@@ -35,15 +35,20 @@ pipeline {
             steps {
                 // Bypassed withKubeConfig - executing native host binary tasks directly
                 sh '''
-                # Direct kubectl straight into your local Minikube cluster instance
-                kubectl config use-context minikube
+                # 1. Point a shortcut variable to your newly fixed config file
+                KCONF="/var/lib/jenkins/.kube_local/config"
                 
-                # Apply manifest structural layouts
-                kubectl apply -f k8s/deployment.yaml
-                kubectl apply -f k8s/service.yaml
+                # 2. Switch context safely using the new configuration path
+                kubectl --kubeconfig=$KCONF config use-context minikube
                 
-                # Patch the deployment target to pull your updated version tag
-                kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
+                # 3. HERE IS THE LINE: It applies your deployment file
+                kubectl --kubeconfig=$KCONF apply -f k8s/deployment.yaml
+                
+                # 4. Applies your service file
+                kubectl --kubeconfig=$KCONF apply -f k8s/service.yaml
+                
+                # 5. Updates the cluster pod to use your freshly built local image tag
+                kubectl --kubeconfig=$KCONF set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
                 '''               
                 }
             }
