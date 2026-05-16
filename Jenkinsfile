@@ -46,6 +46,8 @@ pipeline {
                 
                 # 4. Applies your service file
                 kubectl --kubeconfig=$KCONF apply -f k8s/service.yaml
+
+                kubectl --kubeconfig=$KCONF apply -f k8s/ingress.yaml
                 
                 # 5. Updates the cluster pod to use your freshly built local image tag
                 kubectl --kubeconfig=$KCONF set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_TAG}
