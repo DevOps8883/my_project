@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        APP_NAME = 'student_pass'
+        APP_NAME = 'student-pass'
         // Internal image tag configuration used locally by Minikube
         IMAGE_TAG = "local/${APP_NAME}:${BUILD_NUMBER}"
         LATEST_TAG = "local/${APP_NAME}:latest"
